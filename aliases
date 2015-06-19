@@ -1,0 +1,127 @@
+alias fucking=sudo
+alias dps="docker ps"
+alias dls="docker ps"
+
+alias pgstop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist"
+alias pgstart="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist"
+
+function dforward {
+  VBoxManage controlvm boot2docker-vm natpf1 "$1,tcp,127.0.0.1,$2,,$2"
+}
+
+alias git=/usr/local/Cellar/git/2.2.1/bin/git
+alias ri='RAILS_ENV=integration rspec'
+alias rs='clear && rspec'
+alias rsd='clear && rspec -cfd'
+alias gspec='rspec `git status --porcelain | cut -c4- | grep spec.rb`'
+alias rdb="vim config/database.yml"
+alias migrate="be rake db:migrate db:test:prepare"
+alias rc="be rails c"
+alias mc="ls db/migrate | grep "
+
+alias :q="exit"
+alias :vs="tmux split-window -h"
+alias :hs="tmux split-window"
+alias :split="tmux split-window"
+
+alias mn="mpc next | head -1 | notify MPD '{print}'"
+alias mp="mpc prev | head -1 | notify MPD '{print}'"
+alias ms="mpc stop | cat /dev/null"
+alias mpl="mpc play | head -1 | notify MPD '{print}'"
+alias mpa="mpc pause | cat /dev/null"
+alias mup="mpc update"
+alias maa="mpc ls | mpc add"
+alias mr="mpc random | grep random"
+
+alias vim="/usr/local/Cellar/vim/7.4.335/bin/vim"
+alias vom=vim
+
+alias list="launchctl list"
+
+alias g="grep"
+alias ng="grep -v"
+
+
+alias workmode="killall Postgres; killall redis; killall redis-server; cd ~/VM/gocardless/ && vagrant up"
+alias homemode="cd ~/VM/gocardless && vagrant halt; redis-server&;"
+
+alias gmf="git merge --ff-only"
+alias gmnf="git merge --no-ff"
+alias gfa="git fetch --all"
+alias gpo="git push origin"
+alias gfp="git push -f"
+alias gfpo="git push -f origin"
+
+alias zshrc="vim ~/.zshrc"
+alias vimrc="vim ~/.vimrc"
+alias reload="source ~/.zshrc"
+alias hosts="sudo vim /etc/hosts"
+
+alias tnew=new-tmux-from-dir-name
+
+function sshrm {
+  sed '$1d' ~/.ssh/known_hosts
+}
+
+function new-tmux-from-dir-name {
+  tmux -2 new-session -As `basename $PWD`
+}
+
+function notify() {
+  terminal-notifier -title $1 -message "$2"
+}
+
+function gdrb() {
+  git push origin :$1
+}
+
+function cdn() {
+  cat /dev/null > $1
+}
+
+function w() {
+  cd ~/Work/$1
+}
+
+function p() {
+  ps aux | grep $1
+}
+
+function op_dump() {
+  if [ -z $1 ]
+  then
+    echo "Can't connect to optimus without a port."
+  elif [ -z $2 ]
+  then
+    PGPASSWORD=password pg_dump -h optimus.gocardless.com -p $1 -U gc gc_paysvc_live > ~/gc_paysvc_live.sql
+  else
+    PGPASSWORD=password pg_dump -h optimus.gocardless.com -p $1 -U gc $2 > $2
+  fi
+}
+
+function gkill() {
+  git branch -D $1
+  git push origin :$1
+}
+
+alias gst="git status -s"
+
+alias lknife="KNIFE_ENV=lab knife"
+alias sknife="KNIFE_ENV=staging knife"
+alias pknife="KNIFE_ENV=production knife"
+
+alias lberks="KNIFE_ENV=lab berks"
+alias sberks="KNIFE_ENV=staging berks"
+alias pberks="KNIFE_ENV=production berks"
+
+alias lkitchen="KNIFE_ENV=lab bundle exec kitchen"
+alias skitchen="KNIFE_ENV=staging bundle exec kitchen"
+alias pkitchen="KNIFE_ENV=production bundle exec kitchen"
+
+alias lssh="lknife ssh -C 10 -x bbalic -a softlayer.private_ip --ssh-port 61315"
+alias sssh="sknife ssh -C 10 -x bbalic -a softlayer.private_ip --ssh-port 61315"
+alias pssh="pknife ssh -C 10 -x bbalic -a softlayer.private_ip --ssh-port 61315"
+
+alias ldatabag="EDITOR=vim lknife data bag"
+alias sdatabag="EDITOR=vim sknife data bag"
+alias pdatabag="EDITOR=vim pknife data bag"
